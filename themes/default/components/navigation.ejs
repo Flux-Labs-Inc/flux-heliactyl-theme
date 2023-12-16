@@ -1,0 +1,411 @@
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
+<style>
+.alertify-notifier .ajs-message.ajs-success {
+    color: #2563eb;
+    padding: 12 8px;
+/* From https://css.glass */
+background: #dbeafe;
+border-radius: 48px;
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+text-align: center;
+font-weight: semibold;
+}
+</style>
+<style>
+  .spinner {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      border: 3px solid #0b0b0f;
+      border-radius: 50%;
+      border-top: 3px solid white;
+      width: 22px;
+      height: 22px;
+      -webkit-animation: spin 0.5s linear infinite;
+      /* Safari */
+      animation: spin 0.5s linear infinite;
+      opacity: 0;
+      transition: opacity 0.5s;
+  }
+  /* Safari */
+  @-webkit-keyframes spin {
+      0% {
+          -webkit-transform: rotate(0deg);
+      }
+      100% {
+          -webkit-transform: rotate(360deg);
+      }
+  }
+  @keyframes spin {
+      0% {
+          transform: rotate(0deg);
+      }
+      100% {
+          transform: rotate(360deg);
+      }
+  }
+</style>
+<div id="spinner" class="spinner mt-2 mr-2"></div>
+<!-- Static sidebar for desktop -->
+<div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+    <!-- Sidebar component, swap this element with another sidebar if you like -->
+    <div class="flex-1 flex flex-col min-h-0 bg-[#0b0b0f]">
+      <div class="flex-1 flex flex-col p-4 pt-8 overflow-y-auto">
+        <div class="flex items-center flex-shrink-0 px-6">
+          <svg width="18" height="29" viewBox="0 0 18 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0023 4.86847C14.0023 4.27515 13.7658 3.70609 13.3447 3.2863L11.7281 1.67969L2.31641 11.0521C1.84958 11.5162 1.47921 12.0673 1.22652 12.674C0.973819 13.2808 0.84375 13.9312 0.84375 14.588C0.84375 15.2448 0.973819 15.8952 1.22652 16.502C1.47921 17.1087 1.84958 17.6598 2.31641 18.1238L3.89702 19.7011C3.69238 18.727 3.73484 17.7175 4.02053 16.7639C4.30622 15.8102 4.82614 14.9425 5.53327 14.2393L13.3447 6.45065C13.7658 6.03086 14.0023 5.4618 14.0023 4.86847ZM13.3424 11.0375C13.7649 11.4609 14.0022 12.0347 14.0022 12.6329C14.0022 13.2312 13.7649 13.805 13.3424 14.2284L9.38858 18.1839C8.8241 18.7451 8.37672 19.4129 8.07241 20.1486C7.76811 20.8842 7.61295 21.673 7.61595 22.4692C7.61692 22.8845 7.65997 23.2986 7.74446 23.7053L6.18599 22.1033C5.23793 21.1533 4.70544 19.8658 4.70544 18.5235C4.70544 17.1811 5.23793 15.8936 6.18599 14.9437L11.7279 9.40254L13.3424 11.0375ZM13.3021 22.7473C13.5238 22.9594 13.7 23.2126 13.8202 23.492C13.9405 23.7714 14.0024 24.0714 14.0024 24.3745C14.0024 24.6776 13.9405 24.9776 13.8202 25.257C13.7 25.5365 13.5238 25.7896 13.3021 26.0017L11.6954 27.5671L10.0621 25.9692C9.16557 25.092 8.63499 23.9208 8.57339 22.6831C8.51179 21.4454 8.92357 20.2295 9.72873 19.2716L13.3021 22.7473Z" fill="white"></path>
+          </svg>
+          <span class="text-white text-lg ml-1 font-light tracking-tighter">Flux</span>
+        </div>
+        <nav class="navbar-nav mt-5 flex-1 px-2 space-y-1">
+          <div class="mt-6 relative mb-2">
+              <div class="relative flex">
+                <span class="px-4 bg-transparent text-gray-100 font-thin uppercase mb-2 tracking-widest text-sm"> Dashboard </span>
+              </div>
+          </div>
+          <a href="../dashboard" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-light rounded-full">       
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>                         
+            Overview
+          </a>
+
+          <a href="../servers" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-light rounded-full">      
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m19.5 0a3 3 0 01-3 3H5.25a3 3 0 01-3-3m19.5 0a3 3 0 00-3-3H5.25a3 3 0 00-3 3m16.5 0h.008v.008h-.008v-.008zm-3 0h.008v.008h-.008v-.008z" />
+              </svg>                                          
+              Deployments
+          </a>
+
+          <div class="pt-6"></div> <!-- Spacer -->
+          <div class="mt-6 relative mb-2">
+              <div class="relative flex">
+                <span class="px-4 bg-transparent text-gray-200 font-light uppercase mb-2 tracking-widest text-sm"> Account </span>
+              </div>
+          </div>
+           <a href="../profile" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full"> 
+            <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>                           
+            Profile
+          </a> 
+          <a href="../settings" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+              <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>                                       
+              Security
+            </a>
+            <a href="../logout" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+              <!-- Heroicon name: outline/users -->   
+              <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                </svg>                                                        
+              Logout
+            </a>
+
+            <div class="pt-6"></div> <!-- Spacer -->
+          <div class="mt-6 relative mb-2">
+              <div class="relative flex">
+                <span class="px-4 bg-transparent text-gray-200 font-light uppercase mb-2 tracking-widest text-sm"> Credits </span>
+              </div>
+          </div>
+          <a href="../afk" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+            <!-- Heroicon name: outline/users -->      
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+            </svg>                                      
+            AFK Page
+          </a>
+          <a href="../transfer" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+            <!-- Heroicon name: outline/users -->      
+<svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+</svg>
+                          
+            Transfer
+          </a>
+          <a href="../store" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+              <!-- Heroicon name: outline/users -->    
+                <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>                                                    
+              Store
+            </a>
+        </nav>
+      </div>
+      <div class="p-6">
+      <div class="flex-shrink-0 flex bg-[#17181d]/50 rounded-t-2xl p-4">
+        <a href="#" class="flex-shrink-0 w-full group block">
+          <div class="flex items-center">
+            <div>
+              <img class="inline-block h-9 w-9 rounded-lg" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-white"><%= userinfo.global_name %></p>
+              <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">
+              <% if (typeof packagename.charAt(0) == 'number') { %>
+                <%= packagename %> plan
+              <% } else { %>
+                <%= packagename.charAt(0).toUpperCase() + packagename.slice(1) %> plan
+              <% } %></p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="flex-shrink-0 flex bg-[#17181d] rounded-b-2xl p-4 transition">
+        <a id="lemons" class="flex-shrink-0 w-full group block">
+          <div class="flex items-center">
+            <div class="ml-2">
+              <p class="text-xs font-medium text-white"><%= coins.toLocaleString(undefined, {maximumFractionDigits:0}) %> credit<%= coins == 1 ? "" : "s" %></p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    </div>
+  </div>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+    var currentPageUrl = window.location.href;
+
+    // Get all navigation links
+    var navLinks = document.querySelectorAll('.nav-link');
+
+    // Loop through each navigation link
+    navLinks.forEach(function (link) {
+        // Get the href attribute of the link
+        var linkUrl = link.getAttribute('href');
+
+        // Check if the current page URL contains the link URL
+        if (currentPageUrl.includes(linkUrl.replace('../', '/'))) {
+            // Remove all existing classes
+            link.className = 'nav-link';
+
+            // Add the specified classes
+            link.classList.add(
+                'transition',
+                'text-gray-300',
+                'bg-[#17181d]',
+                'backdrop-blur',
+                'text-white',
+                'group',
+                'flex',
+                'items-center',
+                'px-4',
+                'py-2',
+                'text-sm',
+                'font-light',
+                'rounded-full'
+            );
+        }
+    });
+});
+    </script>
+<script>
+  var options = {
+      classname: 'loadingbar',
+      id: 'loadingbar'
+  };
+  var nanobar = new Nanobar(options);
+  // Show the spinner with a smooth transition
+  var spinner = document.getElementById('spinner');
+  spinner.style.opacity = '1';
+  // Simulate a slower loading progress
+  function simulateLoading() {
+      nanobar.go(10); // Change this value to control the loading speed
+      setTimeout(function() {
+          nanobar.go(50);
+      }, 190); // Delay the progress update
+      setTimeout(function() {
+          nanobar.go(100);
+          // Hide the spinner with a smooth transition
+          spinner.style.opacity = '0';
+      }, 400); // Another delay
+  }
+  simulateLoading();
+</script>
+<style>
+  .loadingbar .bar {
+      background: #0b0b0f;
+      border-radius: 2px;
+      height: 1.65px;
+  }
+</style>
+
+<!-- mobile navigation -->
+<div class="sm:hidden w-full flex flex-col block">
+  <!-- Sidebar component, swap this element with another sidebar if you like -->
+  <div class="flex-1 flex flex-col min-h-0 bg-[#0b0b0f]">
+    <div class="flex-1 flex flex-col p-4 pt-8 overflow-y-auto">
+      <div class="flex items-center flex-shrink-0 px-6">
+        <svg width="18" height="29" viewBox="0 0 18 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0023 4.86847C14.0023 4.27515 13.7658 3.70609 13.3447 3.2863L11.7281 1.67969L2.31641 11.0521C1.84958 11.5162 1.47921 12.0673 1.22652 12.674C0.973819 13.2808 0.84375 13.9312 0.84375 14.588C0.84375 15.2448 0.973819 15.8952 1.22652 16.502C1.47921 17.1087 1.84958 17.6598 2.31641 18.1238L3.89702 19.7011C3.69238 18.727 3.73484 17.7175 4.02053 16.7639C4.30622 15.8102 4.82614 14.9425 5.53327 14.2393L13.3447 6.45065C13.7658 6.03086 14.0023 5.4618 14.0023 4.86847ZM13.3424 11.0375C13.7649 11.4609 14.0022 12.0347 14.0022 12.6329C14.0022 13.2312 13.7649 13.805 13.3424 14.2284L9.38858 18.1839C8.8241 18.7451 8.37672 19.4129 8.07241 20.1486C7.76811 20.8842 7.61295 21.673 7.61595 22.4692C7.61692 22.8845 7.65997 23.2986 7.74446 23.7053L6.18599 22.1033C5.23793 21.1533 4.70544 19.8658 4.70544 18.5235C4.70544 17.1811 5.23793 15.8936 6.18599 14.9437L11.7279 9.40254L13.3424 11.0375ZM13.3021 22.7473C13.5238 22.9594 13.7 23.2126 13.8202 23.492C13.9405 23.7714 14.0024 24.0714 14.0024 24.3745C14.0024 24.6776 13.9405 24.9776 13.8202 25.257C13.7 25.5365 13.5238 25.7896 13.3021 26.0017L11.6954 27.5671L10.0621 25.9692C9.16557 25.092 8.63499 23.9208 8.57339 22.6831C8.51179 21.4454 8.92357 20.2295 9.72873 19.2716L13.3021 22.7473Z" fill="white"></path>
+        </svg>
+        <span class="text-white text-lg ml-1 font-light tracking-tighter">Flux</span>
+      </div>
+      <nav class="navbar-nav mt-5 flex-1 px-2 space-y-1">
+        <div class="mt-6 relative mb-2">
+            <div class="relative flex">
+              <span class="px-4 bg-transparent text-gray-100 font-thin uppercase mb-2 tracking-widest text-sm"> Dashboard </span>
+            </div>
+        </div>
+        <a href="../dashboard" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-light rounded-full">       
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+          </svg>                         
+          Overview
+        </a>
+
+        <a href="../servers" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-light rounded-full">      
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m19.5 0a3 3 0 01-3 3H5.25a3 3 0 01-3-3m19.5 0a3 3 0 00-3-3H5.25a3 3 0 00-3 3m16.5 0h.008v.008h-.008v-.008zm-3 0h.008v.008h-.008v-.008z" />
+            </svg>                                          
+            Deployments
+        </a>
+
+        <div class="pt-6"></div> <!-- Spacer -->
+        <div class="mt-6 relative mb-2">
+            <div class="relative flex">
+              <span class="px-4 bg-transparent text-gray-200 font-light uppercase mb-2 tracking-widest text-sm"> Account </span>
+            </div>
+        </div>
+         <a href="../profile" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full"> 
+          <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>                           
+          Profile
+        </a> 
+        <a href="../settings" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+            <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+            </svg>                                       
+            Security
+          </a>
+          <a href="../logout" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+            <!-- Heroicon name: outline/users -->   
+            <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+              </svg>                                                        
+            Logout
+          </a>
+
+          <div class="pt-6"></div> <!-- Spacer -->
+        <div class="mt-6 relative mb-2">
+            <div class="relative flex">
+              <span class="px-4 bg-transparent text-gray-200 font-light uppercase mb-2 tracking-widest text-sm"> Credits </span>
+            </div>
+        </div>
+        <a href="../afk" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+          <!-- Heroicon name: outline/users -->      
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+          </svg>                                      
+          AFK Page
+        </a>
+        <a href="../transfer" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+          <!-- Heroicon name: outline/users -->      
+<svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+</svg>
+                        
+          Transfer
+        </a>
+        <a href="../store" class="nav-link transition text-gray-300 hover:bg-[#17181d] backdrop-blur hover:text-white group flex items-center px-4 py-2 text-sm font-medium rounded-full">
+            <!-- Heroicon name: outline/users -->    
+              <svg class="text-dark-300 group-hover:text-white mr-2 flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>                                                    
+            Store
+          </a>
+      </nav>
+    </div>
+    <div class="p-6">
+    <div class="flex-shrink-0 flex bg-[#17181d]/50 rounded-t-2xl p-4">
+      <a href="#" class="flex-shrink-0 w-full group block">
+        <div class="flex items-center">
+          <div>
+            <img class="inline-block h-9 w-9 rounded-lg" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-white"><%= userinfo.global_name %></p>
+            <p class="text-xs font-medium text-gray-300 group-hover:text-gray-200">
+            <% if (typeof packagename.charAt(0) == 'number') { %>
+              <%= packagename %> plan
+            <% } else { %>
+              <%= packagename.charAt(0).toUpperCase() + packagename.slice(1) %> plan
+            <% } %></p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="flex-shrink-0 flex bg-[#17181d] rounded-b-2xl p-4 transition">
+      <a id="lemons" class="flex-shrink-0 w-full group block">
+        <div class="flex items-center">
+          <div class="ml-2">
+            <p class="text-xs font-medium text-white"><%= coins.toLocaleString(undefined, {maximumFractionDigits:0}) %> credit<%= coins == 1 ? "" : "s" %></p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="sm:hidden w-full flex flex-col block bg-[#0b0b0f] px-6 pb-6">
+  <!-- Sidebar component, swap this element with another sidebar if you like -->
+  <div class="flex-1 flex min-h-0 bg-[#17181d] p-4 rounded-2xl text-gray-300 text-xs">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-3 text-amber-500">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+    </svg>
+    Flux isn't fully supported on mobile yet.
+  </div>
+</div>
+<style>
+  #skeleton-loader {
+    display: none;
+  }
+
+  #skeleton-loader.active {
+    display: block;
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get references to the skeleton loader and content elements
+    const skeletonLoader = document.getElementById("skeleton-loader");
+    const content = document.getElementById("content");
+
+    // Function to show the skeleton loader and hide the content
+    function showSkeletonLoader() {
+      skeletonLoader.classList.add("active");
+      content.style.display = "none";
+    }
+
+    // Function to hide the skeleton loader and show the content
+    function hideSkeletonLoader() {
+      skeletonLoader.classList.remove("active");
+      content.style.display = "block";
+    }
+
+    // Show the skeleton loader immediately (initial state)
+    showSkeletonLoader();
+    setTimeout(hideSkeletonLoader, 250);
+  });
+</script>
+<script>
+  function replaceWithLoader() {
+    // Hide content, show loader
+    document.getElementById('contentWrapper').style.display = 'none';
+    document.getElementById('loaderWrapper').style.display = 'inline-block';
+
+    // Simulate asynchronous task (replace this with your actual loading logic)
+    setTimeout(() => {
+      // Show content, hide loader (you can replace the content with the actual loaded content)
+      document.getElementById('contentWrapper').style.display = 'inline-block';
+      document.getElementById('loaderWrapper').style.display = 'none';
+    }, 2000); // Replace 2000 with the time it takes to load your content
+  }
+</script>
